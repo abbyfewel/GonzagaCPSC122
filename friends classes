@@ -1,0 +1,39 @@
+#include <iostream>
+
+class BaseClass {
+protected:
+    int age1;
+
+public:
+    int get_age() {
+        return age1;
+    }
+    void set_age(int age) {
+        age1 = age;
+    }
+    friend class OtherAge;
+};
+
+class OtherAge {
+private:
+    int age2;
+public:
+    int get_age() {
+        return age2;
+    }
+    void set_age(int age) {
+        age2 = age;
+    }
+    int get_sum(BaseClass& obj) {
+        return age2 + obj.age1;
+    }
+};
+
+int main() {
+  BaseClass Abby;
+  Abby.set_age(19);
+  OtherAge Amy;
+  Amy.set_age(19);
+  int sum_of_ages = Amy.get_sum(Abby);
+  std::cout << sum_of_ages << std::endl;
+}
