@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int arrFunction (int []); //prototype 
+
+int main() {
+  int num1, num2, num3; // values for the array elements
+  cout << "Enter a number: ";
+  cin >> num1;
+  cout << "Enter another number: ";
+  cin >> num2;
+  cout << "Enter one more number: ";
+  cin >> num3;
+  int arr[3] = {num1, num2, num3}; //declaring array using the numbers initialized
+  int miniNum = arrFunction(arr); // calling function 
+  cout << "The minimum value in the array is " << miniNum << ". \n"; // print return
+}
+
+int arrFunction (int array2[]) { 
+  int i = 0; // to look at the elements and compare them
+  int mini = 0; // to find the minimum value and assign it
+  if ((array2[i] < array2[i+1]) && (array2[i] < array2[i+2])) { // if array[i] is smallest
+    mini = array2[i]; 
+  } else if ((array2[i+1] < array2[i+2]) && (array2[i+1] < array2[i])) { //if array [i+1] is smallest
+    mini = array2[i+1];
+  } else if ((array2[i+2] < array2[i+1]) && (array2[i+2] < array2[i])) { // if array [i+2] is smallest
+    mini = array2[i+2];
+  }
+  return mini;
+}
