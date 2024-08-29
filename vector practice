@@ -1,0 +1,16 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+  vector<char> letters;   // initializing a vector without a size or elements
+  cout << "Maximum number of elements available of the \'Letters\' vector is: " << letters.max_size() << ".\n";
+  vector <char> numbers {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // initializing a vector with 10 elements
+  cout << "Maximum number of elements available of the \'Numbers\' vector is: " << numbers.max_size() << ".\n";
+  if (letters.max_size() == numbers.max_size()) { // comparing sizes
+    cout << "The maximum number of elements available of the \'Letters\' and \'Numbers\' vectors are equal." << endl;
+  } else {
+    cout << "The maximum number of elements available of the \'Letters\' and \'Numbers\' vectors are not equal." << endl;
+  }
+}
