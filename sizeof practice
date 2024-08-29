@@ -1,0 +1,10 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  string string1 = "practiceString";
+  string name = "Gonzaga";
+  cout << sizeof(string1) << endl;
+  cout << sizeof(name) << endl;
+  cout << sizeof(string);
+}
