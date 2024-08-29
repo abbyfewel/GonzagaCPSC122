@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  int age = 19;
+  int * age_pointer = nullptr;
+  age_pointer = &age;
+  cout << &age << endl;
+  cout << age_pointer << endl;
+  cout << *&age;
+}
