@@ -1,0 +1,129 @@
+#include<iostream>
+#include<vector>
+#include<cassert>
+#include<algorithm>
+using namespace std;
+
+bool test_linear_search();
+bool test_binary_search();
+int linear_search(vector<int>, int);
+int binary_search(vector<int>, int);
+
+int main() {
+  if (! test_binary_search()) {
+    cout << "Binary Search Failed" << endl;
+    return -1;
+  }
+  else {
+    cout << "Binary Search Passed" << endl;
+  }
+  if (! test_linear_search()) {
+    cout << "Linear Search Failed" << endl;
+    return -1;
+  }
+  else {
+    cout << "Linear Search Passed" << endl;
+  }
+  return 0;
+}
+
+bool test_linear_search() {
+  // Setup
+  vector<int> linear_search_vector = {11, 05, 16, 02, 15, 30, 33};
+  int search_value_found = 30; //value to look for 
+  int search_value_not_found = 14;
+  // Execution
+  int true_search_position = linear_search(linear_search_vector,
+  search_value_found);
+  int false_search_position = linear_search(linear_search_vector,
+  search_value_not_found);
+  // Validation
+  if (true_search_position != 5 || false_search_position != -1) {
+    cout << "Search returned incorrect location" << endl;
+    return false;
+  }
+  // Cleanup
+  return true;
+}
+
+bool test_binary_search() {
+  // Setup
+  vector<int> binary_search_vector = {11, 05, 16, 02, 15, 30}; // vector to search through (before being sorted)
+  int binary_value_found = 30;
+  int binary_value_not_found = 14;
+  // Execution
+  std::sort(binary_search_vector.begin(), binary_search_vector.end());
+  int binary_value_search_position = binary_search(binary_search_vector, binary_value_found);
+  int false_search_position = binary_search(binary_search_vector, binary_value_not_found);
+  // Validation
+  if (binary_value_search_position != 5 || false_search_position != -1) {
+    cout << "Search returned incorrect location" << endl; // if the search is not in the vector, it will return -1
+    return false;
+  }
+  // Cleanup
+  return true;
+  }
+  
+int linear_search(vector<int> vector_to_be_searched, int search_value) {
+  bool found = false;
+  int position = -1;
+  int index = 0;
+  while(index < vector_to_be_searched.size() && !found) {
+    if (vector_to_be_searched.at(index) == search_value) {
+      found = true;
+      position = index;
+    }
+    index++;
+  }
+  return position;
+}
+
+int binary_search(vector<int> vector_to_be_searched, int search_value) {
+  //Setup
+  bool binary_found = false;
+  int binary_position = -1;
+  int binary_index = 0;
+  int starting = 0;
+  int ending = vector_to_be_searched.size()- 1;
+  //Execution
+  while (!binary_found) {
+    binary_position = (vector_to_be_searched.size() / 2); // starting search in the middle
+    if (binary_position == search_value) { 
+      binary_index = binary_position;
+    } else if (binary_position > search_value) { // if the search value is less than the middle, search the left half
+      while (!binary_found) {
+        binary_index = ((starting + ending) / 2) / 2; // starting in the middle of the middle
+        if (binary_position == search_value) {
+          binary_index = binary_position;
+        } else if (binary_position > search_value) {
+          ending = binary_position;
+          binary_index = (starting + ending) /2;
+        } else {
+          starting = binary_position;
+          binary_index = (starting + ending) / 2;
+        }
+      }
+    } else if (binary_position < search_value) {
+      while (!binary_found) {
+        binary_index = (((starting+ ending)/2) / 2) + ((starting + ending) /2); // starting in the middle of the middle
+        if (binary_position == search_value) {
+          binary_index = binary_position;
+        } else if (binary_position > search_value) {
+          ending = binary_position;
+          binary_index = ((starting + ending) /2);
+        } else {
+          starting = binary_position;
+          binary_index = (starting + ending)/2;
+        }
+      }
+    }
+    binary_index++;
+  }
+  //Validation
+  if (vector_to_be_searched.at(binary_index) == search_value) {
+    binary_found = true; // ensuring the search went well
+    binary_position = binary_index;
+  }
+  //Cleanup
+  return binary_position;
+}
