@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+int main() {
+  int test1, test2, test3, test4, test5, test6, test7;
+  cout << "Enter the first test score: ";
+  cin >> test1;
+  cout << "Enter the second test score: ";
+  cin >> test2;
+  cout << "Enter the third test score: ";
+  cin >> test3;
+  cout << "Enter the fourth test score: ";
+  cin >> test4;
+  cout << "Enter the fifth test score: ";
+  cin >> test5;
+  cout << "Enter the sixth test score: ";
+  cin >> test6;
+  cout << "Enter the seventh test score: ";
+  cin >> test7;
+  vector <int> tests {test1, test2, test3, test4, test5, test6, test7}; //a class takes seven tests across the semester
+  int minimumScore = min(test1, min(test2, min(test3, min(test4, min(test5, min(test6, test7)))))); // finds the lowest test score 
+  int indexOfMinScore;
+  for (indexOfMinScore = 0; indexOfMinScore < tests.size(); indexOfMinScore++) {
+    if (tests[indexOfMinScore] == minimumScore) {
+      break;
+    }
+  }
+  switch (indexOfMinScore) {
+    case 0:
+      tests.erase(tests.begin()); // erases the lowest score
+      break;
+    case 1:
+      tests.erase(tests.begin() +1); // erases the lowest score
+      break;
+    case 2:
+      tests.erase(tests.begin() +2); // erases the lowest score
+      break;
+    case 3:
+      tests.erase(tests.begin() +3); // erases the lowest score
+      break;
+    case 4:
+      tests.erase(tests.begin() +4); // erases the lowest score
+      break;
+    case 5:
+      tests.erase(tests.begin() +5); // erases the lowest score
+      break;
+    case 6:
+      tests.erase(tests.begin() +6); // erases the lowest score
+      break;
+  }
+  cout << "These will be the scores in the gradebook: \n";
+  for (int size : tests) {
+    cout << size << endl; // prints out the scores that will go in the gradebook
+  }
+  cout << "The score dropped was " << minimumScore << "." << endl;
+}
