@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+class Circle {
+  private:
+    double radius;
+  public:
+    double area() const;
+    double circumference()const ;
+    void setRadius(double r);
+    void getRadius(double r);
+};
+
+void Circle:: getRadius(double r) {
+  radius = r;
+}
+
+void Circle:: setRadius(double r) {
+  radius = r;
+}
+
+double Circle:: area() const {
+  double pi = 3.141592653;
+  double area_of_circle = pi * radius * radius;
+  return area_of_circle;
+}
+
+double Circle:: circumference() const {
+  double pi = 3.141592653;
+  double circumf = 2 * pi * radius;
+  return circumf;
+}
+
+int main() {
+  Circle c1;
+  c1.setRadius(2);
+  cout << "The area of the circle is: " << c1.area() << endl;
+  cout << "The circumference of the circle is: " << c1.circumference() << endl;
+}
