@@ -1,0 +1,179 @@
+#include<iostream>
+#include<vector>
+#include<fstream>
+#include<cassert>
+#include <string>
+using namespace std;
+// using style guide found here: https://cs.gonzaga.edu/faculty/bowers/courses-s22/cpsc223/style-guide.html
+
+void print_vector(vector<char>);
+bool test_selection_sort();
+bool test_get_vowels();
+bool test_bubble_sort();
+void selection_sort(vector<char>&);
+void bubble_sort(vector<char>&);
+void swap(char&, char&);
+void get_vowels(vector<char>&, string);
+
+int main() {
+    vector<char> vowels_vector;
+    //read the string from the file
+    fstream inputFile("input.txt"); // Open the file for reading
+    string file_contents; 
+    string line;
+    while (getline(inputFile, line)) {
+        file_contents += line + '\n'; // Add newline character to maintain file format
+    }
+    //filter the vowels
+    get_vowels(vowels_vector, file_contents);
+    //sort the vowels using bubble sort
+    bubble_sort(vowels_vector);
+    //print out the original string
+    cout << "File contents: " << file_contents << endl;
+    //print out the sorted vowels only
+    cout << "Sorted vowels:" << endl;
+    for (int sorted_vowels_length=0; sorted_vowels_length < vowels_vector.size(); sorted_vowels_length++) {
+        cout<< vowels_vector[sorted_vowels_length] << ", ";
+    }
+    if (! test_selection_sort()) {
+        cout << "Selection Sort Failed" << endl;
+        return -1;
+    }
+    else {
+        cout << "\nSelection Sort Passed" << endl;
+    }
+    if (! test_bubble_sort()) {
+        cout << "Bubble Sort Failed" << endl;
+        return -1;
+    }
+    else {
+        cout << "Bubble Sort Passed" << endl;
+    }
+    if (! test_get_vowels()) {
+        cout << "Getting Vowels Failed" << endl;
+    }
+    else {
+        cout << "Getting Vowels Passed" << endl;
+    }
+    return 0;
+}
+
+bool test_get_vowels() {
+    //write a test for your get_vowels() function.
+    //Setup
+    vector<char> get_vowels_vector = {'a', 'e', 'i', 'o', 'u'};
+    //Execution
+    get_vowels(get_vowels_vector, "input.txt");
+    //Validation
+    if (get_vowels_vector.size() < 5) {
+      return false;
+    }
+    //Cleaup
+    return true;
+}
+
+void get_vowels(vector<char>& vowels_vector, string input_string) {
+    // get vowels here
+    //Setup
+    vector<char> file_contents_vector(input_string.begin(), input_string.end());
+    int index = 0;
+    //Execution
+    for (index = 0; index < file_contents_vector.size(); index++) {
+            if (file_contents_vector[index] == 'a' || file_contents_vector[index] == 'e' || file_contents_vector[index] == 'i' || file_contents_vector[index] == 'o' || file_contents_vector[index] == 'u') {
+          vowels_vector.push_back(file_contents_vector[index]);
+        } 
+    }
+}
+
+void print_vector(vector<char> vec) { 
+    for (int i = 0; i < vec.size(); i++) {
+        cout << vec[i] << " ";
+    }
+    cout << endl;
+}
+
+bool test_selection_sort() {
+    // Setup
+    vector<char> selection_sort_vector = {'u', 'o', 'i', 'e', 'a'};
+    // Execution
+    selection_sort(selection_sort_vector);
+    // Validation
+    for(int i = 0; i < selection_sort_vector.size()-1; i++) {
+        if(selection_sort_vector[i] > selection_sort_vector[i+1]) {
+            return false;
+        }
+    }
+    // Cleanup
+    return true;
+}
+
+void selection_sort(vector<char> &vector_to_be_sorted) { //sorting the vowels in the input.txt file
+    int i, j, min_idx;
+    int vector_size = vector_to_be_sorted.size();
+
+    // One by one move boundary of
+    // unsorted vector
+    for (i = 0; i < vector_size - 1; i++) {
+
+        // Find the minimum element in
+        // unsorted vector
+        min_idx = i;
+        for (j = i + 1; j < vector_size; j++) {
+            if (vector_to_be_sorted[j] < vector_to_be_sorted[min_idx])
+                min_idx = j;
+        }
+        // Swap the found minimum element
+        // with the first element
+        if (min_idx != i) {
+            swap(vector_to_be_sorted[min_idx], vector_to_be_sorted[i]);
+        }  
+    }
+}
+
+bool test_bubble_sort() {
+    // Setup
+    vector<char> bubble_sort_vector = {'u', 'o', 'i', 'e', 'a'};
+    // Execution
+   bubble_sort(bubble_sort_vector);
+    // Validation
+    for(int i = 0; i < bubble_sort_vector.size()-1; i++) {
+      if(bubble_sort_vector[i] > bubble_sort_vector[i+1]) {
+          return false;
+      }
+    }
+    // Cleanup
+    return true;
+}
+
+void bubble_sort(vector<char> &vector_to_be_sorted) {
+    // implement bubble sort here
+    //Setup
+    int vector_size = vector_to_be_sorted.size();
+
+    // Execution
+    for (int vector_index = 0; vector_index < vector_size - 1; ++vector_index) {
+        for (int swap_index = 0; swap_index < vector_size - vector_index - 1; ++swap_index) {
+            if (vector_to_be_sorted[swap_index] > vector_to_be_sorted[swap_index + 1]) {
+                int temp = vector_to_be_sorted[swap_index];
+                vector_to_be_sorted[swap_index] = vector_to_be_sorted[swap_index + 1];
+                vector_to_be_sorted[swap_index + 1] = temp;
+            }
+        }
+    }
+    //Validation
+    bool done_swapping = false;
+    for (int final_check = 0; final_check < vector_to_be_sorted.size(); final_check++) {
+        if (vector_to_be_sorted[final_check] < vector_to_be_sorted[final_check +1]) {
+            done_swapping = true;
+        } else  {
+            done_swapping = false;
+        }
+    }
+    //Cleanup
+}
+
+void swap(char &a, char &b) {
+    char temp = a;
+    a = b;
+    b = temp;
+}
